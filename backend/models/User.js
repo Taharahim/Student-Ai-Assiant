@@ -1,19 +1,40 @@
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema(
+const taskSchema = new mongoose.Schema(
   {
-    name: String,
-    email: {
-      type: String,
-      unique: true,
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
-    password: String,
-    role: {
+
+    title: {
       type: String,
-      default: "student",
+      required: true,
+      trim: true,
+    },
+
+    description: {
+      type: String,
+      default: "",
+    },
+
+    subject: {
+      type: String,
+      default: "General",
+    },
+
+    dueDate: {
+      type: Date,
+      required: true,
+    },
+
+    completed: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }
 );
 
-export default mongoose.model("User", userSchema);
+export default mongoose.model("Task", taskSchema);
